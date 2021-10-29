@@ -106,6 +106,7 @@ PAM_EXTERN int
 pam_sm_authenticate(pam_handle_t *pamh, int pam_flags,
     int argc, const char *argv[])
 {
+    duo_syslog(LOG_ERR, "Did we get into PAM even?");
     struct duo_config cfg;
     struct passwd *pw;
     struct in_addr addr;
@@ -265,7 +266,9 @@ pam_sm_authenticate(pam_handle_t *pamh, int pam_flags,
 
     pam_err = PAM_SERVICE_ERR;
 
+    duo_syslog(LOG_WARNING, "Let's see if we get here");
     for (i = 0; i < cfg.prompts; i++) {
+        duo_syslog(LOG_WARNING, "Let's see if we get further");
         code = duo_login(duo, user, host, flags,
                     cfg.pushinfo ? cmd : NULL, cfg.failmode);
         if (code == DUO_FAIL) {
