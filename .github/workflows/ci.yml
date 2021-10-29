@@ -1,9 +1,6 @@
 name: Duo Unix CI
 
-on: workflow_dispatch
-#  push:
-#    branches:
-#      - master
+on: [push, pull_request]
 #  pull_request:
 #    branches:
 #      - master
