@@ -67,6 +67,7 @@ my_conv(int n, const struct pam_message **msg,
         default:
             goto fail;
         }
+        fprintf(stderr, "What is p? %s\n", p);
     }
     *resp = aresp;
     return (PAM_SUCCESS);
