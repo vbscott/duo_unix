@@ -113,14 +113,12 @@ main(int argc, char *argv[])
     }
     if ((ret = pam_authenticate(pamh, 0)) != PAM_SUCCESS) {
         if (ret != PAM_MAXTRIES) {
-           fprintf(stderr, "I guess pam didn't start\n");
+           fprintf(stderr, "I guess pam didn't start %d\n", ret);
             die(pamh, ret);
         }
     }
-    fprintf(stderr, "PAM auth\n");
     if ((ret = pam_end(pamh, ret)) != PAM_SUCCESS) {
                 die(pamh, ret);
     }
-    fprintf(stderr, "Before leaving\n");
     exit(EXIT_SUCCESS);
 }
