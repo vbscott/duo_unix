@@ -67,7 +67,6 @@ my_conv(int n, const struct pam_message **msg,
         default:
             goto fail;
         }
-        fprintf(stderr, "What is p? %s\n", p);
     }
     *resp = aresp;
     return (PAM_SUCCESS);
@@ -101,10 +100,12 @@ main(int argc, char *argv[])
         exit(EXIT_FAILURE);
     }
     user = argv[1];
+    fprintf(stderr, "Username: %s\n", user);
     if (argc > 2)
         host = argv[2];
 
     if ((ret = pam_start("testpam", user, &conv, &pamh)) != PAM_SUCCESS) {
+        fprintf(stderr, "I guess pam didn't start\n");
                 die(pamh, ret);
     }
     if (host != NULL) {
