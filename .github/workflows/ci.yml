@@ -1,12 +1,12 @@
 name: Duo Unix CI
 
-on: 
-  push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - master
+on: workflow_dispatch
+#  push:
+#    branches:
+#      - master
+#  pull_request:
+#    branches:
+#      - master
 
 jobs:
   nix_ci:
@@ -25,6 +25,34 @@ jobs:
 
       - name: Build
         run: ./bootstrap && ./configure --with-pam --prefix=/usr && make CC=${{ matrix.cc }}
+
+      - name: Run tests
+        run: make check
+
+      - name: Static analysis
+        run: cppcheck --quiet --force -i tests --suppressions-list=.false_positive.txt --error-exitcode=1 .
+
+  mac_ci:
+    runs-on: macos-latest
+
+    strategy:
+      matrix:
+        cc: [gcc, clang]
+
+    steps:
+      - name: Install packages
+        run: brew update && brew install automake openssl cppcheck
+
+      - name: Use Python 2
+        uses: actions/setup-python@v2
+        with:
+          python-version: "2.x"
+
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Build
+        run: ./bootstrap && ./configure --with-pam --prefix=/usr --with-openssl=/usr/local/opt/openssl && make CC=${{ matrix.cc }}
 
       - name: Run tests
         run: make check
