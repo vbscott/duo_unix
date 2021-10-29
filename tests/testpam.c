@@ -100,12 +100,10 @@ main(int argc, char *argv[])
         exit(EXIT_FAILURE);
     }
     user = argv[1];
-    fprintf(stderr, "Username: %s\n", user);
     if (argc > 2)
         host = argv[2];
 
     if ((ret = pam_start("testpam", user, &conv, &pamh)) != PAM_SUCCESS) {
-        fprintf(stderr, "I guess pam didn't start\n");
                 die(pamh, ret);
     }
     if (host != NULL) {
@@ -115,11 +113,14 @@ main(int argc, char *argv[])
     }
     if ((ret = pam_authenticate(pamh, 0)) != PAM_SUCCESS) {
         if (ret != PAM_MAXTRIES) {
+           fprintf(stderr, "I guess pam didn't start\n");
             die(pamh, ret);
         }
     }
+    fprintf(stderr, "PAM auth\n");
     if ((ret = pam_end(pamh, ret)) != PAM_SUCCESS) {
                 die(pamh, ret);
     }
+    fprintf(stderr, "Before leaving\n");
     exit(EXIT_SUCCESS);
 }
