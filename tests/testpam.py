@@ -61,6 +61,8 @@ def main():
     else:
         env['LD_PRELOAD'] = paths.build + '/.libs/libtestpam_preload.so'
         
+    print("About to open the thing")
+    print(args)
     p = subprocess.Popen(args, env=env)
     p.wait()
     f.close()
