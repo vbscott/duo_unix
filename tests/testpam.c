@@ -84,7 +84,7 @@ static struct pam_conv conv = { my_conv, NULL };
 static void
 die(pam_handle_t *pamh, int errnum)
 {
-        fprintf(stderr, "%s\n", pam_strerror(pamh, errnum));
+        //fprintf(stderr, "%s\n", pam_strerror(pamh, errnum));
         exit(EXIT_FAILURE);
 }
 
@@ -113,7 +113,6 @@ main(int argc, char *argv[])
     }
     if ((ret = pam_authenticate(pamh, 0)) != PAM_SUCCESS) {
         if (ret != PAM_MAXTRIES) {
-           fprintf(stderr, "I guess pam didn't start %d\n", ret);
             die(pamh, ret);
         }
     }
