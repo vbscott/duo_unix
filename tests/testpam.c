@@ -84,7 +84,7 @@ static struct pam_conv conv = { my_conv, NULL };
 static void
 die(pam_handle_t *pamh, int errnum)
 {
-        //fprintf(stderr, "%s\n", pam_strerror(pamh, errnum));
+        fprintf(stderr, "%s\n", pam_strerror(pamh, errnum));
         exit(EXIT_FAILURE);
 }
 

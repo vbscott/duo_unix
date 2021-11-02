@@ -63,6 +63,8 @@ def main():
         
     p = subprocess.Popen(args, env=env)
     p.wait()
+    new_thing = open(f.name, 'r')
+    print(new_thing.read())
     f.close()
     
     sys.exit(p.returncode)
