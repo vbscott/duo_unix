@@ -40,6 +40,9 @@ jobs:
       - name: Install packages
         run: brew update && brew install automake openssl cppcheck
 
+      - name: Install xcode things
+        run: xcode-select --install
+
       - name: Use Python 2
         uses: actions/setup-python@v2
         with:
